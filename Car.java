@@ -10,11 +10,12 @@ public class Car implements Drivable, Movable {
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
 
-    /**construct a new Car object
-     * @param nrDoors       the number of doors the new car has
-     * @param enginePower   the engine power of the new car
-     * @param clr           the color of the new car
-     * @param modelName     the (model) name of the new car
+    /**construct a new Car object. default facing is north, default position is 0,0 and default speed is 0
+     * @param   nrDoors         the number of doors the new car has
+     * @param   enginePower     the engine power of the new car
+     * @param   clr             the color of the new car
+     * @param   modelName       the (model) name of the new car
+     * @throws  AssertionError  if enginePower is less than 0
      */
     public Car(int nrDoors, double enginePower, Color clr, String modelName) {
         this.nrDoors = nrDoors;
