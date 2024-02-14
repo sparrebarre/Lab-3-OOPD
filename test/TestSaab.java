@@ -1,18 +1,21 @@
+package test;
+import src.Saab95;
+import src.Direction;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.awt.*;
-
 import static org.junit.Assert.*;
 
-public class Saab95Test {
+import java.awt.*;
+import java.awt.geom.Point2D;
+
+import static org.junit.Assert.assertEquals;
+
+public class TestSaab {
 
     Saab95 s;
 
     @Before
-    public void init() {
-        s = new Saab95(2, 100, Color.red, "s95");
-    }
+    public void init() {s = new Saab95();}
 
     @Test
     public void doors() {
@@ -21,7 +24,7 @@ public class Saab95Test {
 
     @Test
     public void enginePower() {
-        assertEquals(100, s.getEnginePower(), 0);
+        assertEquals(125, s.getEnginePower(), 0);
     }
 
     @Test
@@ -31,17 +34,17 @@ public class Saab95Test {
 
     @Test
     public void facing() {
-        assertEquals(Direction.N, s.getFacing());
+        assertEquals(Direction.N, s.getDirection());
     }
 
     @Test
     public void modelName() {
-        assertEquals("s95", s.getModelName());
+        assertEquals("Saab95", s.getModelName());
     }
 
     @Test
     public void position() {
-        assertEquals(new Position(0, 0), s.getPosition());
+        assertEquals(new Point2D.Double(0, 0), s.getPosition());
     }
 
     @Test
@@ -53,53 +56,53 @@ public class Saab95Test {
     @Test
     public void turnLeft() {
         s.turnLeft();
-        assertEquals(Direction.NW, s.getFacing());
+        assertEquals(Direction.NW, s.getDirection());
     }
 
     @Test
     public void soMuchLeft() {
         s.turnLeft();
-        assertEquals(Direction.NW, s.getFacing());
+        assertEquals(Direction.NW, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.W, s.getFacing());
+        assertEquals(Direction.W, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.SW, s.getFacing());
+        assertEquals(Direction.SW, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.S, s.getFacing());
+        assertEquals(Direction.S, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.SE, s.getFacing());
+        assertEquals(Direction.SE, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.E, s.getFacing());
+        assertEquals(Direction.E, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.NE, s.getFacing());
+        assertEquals(Direction.NE, s.getDirection());
         s.turnLeft();
-        assertEquals(Direction.N, s.getFacing());
+        assertEquals(Direction.N, s.getDirection());
     }
 
     @Test
     public void turnRight() {
         s.turnRight();
-        assertEquals(Direction.NE, s.getFacing());
+        assertEquals(Direction.NE, s.getDirection());
     }
 
     @Test
     public void soMuchRight() {
         s.turnRight();
-        assertEquals(Direction.NE, s.getFacing());
+        assertEquals(Direction.NE, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.E, s.getFacing());
+        assertEquals(Direction.E, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.SE, s.getFacing());
+        assertEquals(Direction.SE, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.S, s.getFacing());
+        assertEquals(Direction.S, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.SW, s.getFacing());
+        assertEquals(Direction.SW, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.W, s.getFacing());
+        assertEquals(Direction.W, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.NW, s.getFacing());
+        assertEquals(Direction.NW, s.getDirection());
         s.turnRight();
-        assertEquals(Direction.N, s.getFacing());
+        assertEquals(Direction.N, s.getDirection());
     }
 
     @Test
@@ -125,7 +128,7 @@ public class Saab95Test {
     public void speedyMove() {
         s.gas(1);
         s.move();
-        assertEquals(1, s.getPosition().getY(), 0.01);
+        assertEquals(1.25, s.getPosition().getY(), 0.01);
         assertEquals(0, s.getPosition().getX(), 0);
     }
 
@@ -134,7 +137,7 @@ public class Saab95Test {
         s.setTurboOn();
         s.gas(1);
         s.move();
-        assertEquals(1.3, s.getPosition().getY(), 0.01);
+        assertEquals(1.625, s.getPosition().getY(), 0.01);
         assertEquals(0, s.getPosition().getX(), 0);
     }
 
@@ -146,28 +149,28 @@ public class Saab95Test {
         assertEquals(0, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
-        assertEquals(0.15, s.getPosition().getY(), 0.01);
-        assertEquals(0.05, s.getPosition().getX(), 0.01);
+        assertEquals(0.17, s.getPosition().getY(), 0.01);
+        assertEquals(0.07, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
-        assertEquals(0.15, s.getPosition().getY(), 0.01);
-        assertEquals(0.15, s.getPosition().getX(), 0.01);
+        assertEquals(0.17, s.getPosition().getY(), 0.01);
+        assertEquals(0.17, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
         assertEquals(0.1, s.getPosition().getY(), 0.01);
-        assertEquals(0.2, s.getPosition().getX(), 0.01);
+        assertEquals(0.24, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
         assertEquals(0, s.getPosition().getY(), 0.01);
-        assertEquals(0.2, s.getPosition().getX(), 0.01);
+        assertEquals(0.24, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
-        assertEquals(-0.05, s.getPosition().getY(), 0.01);
-        assertEquals(0.15, s.getPosition().getX(), 0.01);
+        assertEquals(-0.07, s.getPosition().getY(), 0.01);
+        assertEquals(0.17, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
-        assertEquals(-0.05, s.getPosition().getY(), 0.01);
-        assertEquals(0.05, s.getPosition().getX(), 0.01);
+        assertEquals(-0.07, s.getPosition().getY(), 0.01);
+        assertEquals(0.07, s.getPosition().getX(), 0.01);
         s.turnRight();
         s.move();
         assertEquals(0, s.getPosition().getY(), 0.01);
@@ -180,32 +183,32 @@ public class Saab95Test {
 
     @Test
     public void turbo() {
-        assertFalse(s.isTurboOn());
+        assertFalse(s.turboOn);
     }
 
     @Test
     public void turboOff() {
         s.setTurboOn();
-        assertTrue(s.isTurboOn());
+        assertTrue(s.turboOn);
     }
 
     @Test
     public void soMuchTurbo() {
-        assertFalse(s.isTurboOn());
+        assertFalse(s.turboOn);
         s.setTurboOn();
-        assertTrue(s.isTurboOn());
+        assertTrue(s.turboOn);
         s.setTurboOn();
-        assertTrue(s.isTurboOn());
+        assertTrue(s.turboOn);
         s.setTurboOff();
-        assertFalse(s.isTurboOn());
+        assertFalse(s.turboOn);
         s.setTurboOff();
-        assertFalse(s.isTurboOn());
+        assertFalse(s.turboOn);
     }
 
     @Test
     public void gas() {
         s.gas(1);
-        assertEquals(1, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.25, s.getCurrentSpeed(), 0.01);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -224,15 +227,15 @@ public class Saab95Test {
             s.gas(1);
         }
         s.gas(1);
-        assertEquals(100, s.getCurrentSpeed(), 0);
-        assertEquals(100, s.getEnginePower(), 0);
+        assertEquals(125, s.getCurrentSpeed(), 0);
+        assertEquals(125, s.getEnginePower(), 0);
         assertEquals(s.getEnginePower(), s.getCurrentSpeed(), 0);
     }
 
     @Test
     public void brake() {
         s.gas(1);
-        assertEquals(1, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.25, s.getCurrentSpeed(), 0.01);
         s.brake(1);
         assertEquals(0, s.getCurrentSpeed(), 0.01);
     }
@@ -257,7 +260,9 @@ public class Saab95Test {
     public void turboGas() {
         s.setTurboOn();
         s.gas(1);
-        assertEquals(1.3, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.625, s.getCurrentSpeed(), 0.01);
     }
+
+
 
 }

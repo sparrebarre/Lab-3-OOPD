@@ -1,24 +1,26 @@
+package test;
+import src.Volvo240;
+import src.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class Volvo240Test {
+public class TestVolvo {
 
     Volvo240 v;
 
     @Before
-    public void init() {
-        v = new Volvo240(2, 100, Color.red, "v240");
-    }
+    public void init() {v = new Volvo240();}
 
     @Test
     public void doors() {
-        assertEquals(2, v.getNrDoors());
+        assertEquals(4, v.getNrDoors());
     }
-    
+
     @Test
     public void enginePower() {
         assertEquals(100, v.getEnginePower(), 0);
@@ -26,22 +28,22 @@ public class Volvo240Test {
 
     @Test
     public void color() {
-        assertEquals(Color.red, v.getColor());
+        assertEquals(Color.black, v.getColor());
     }
 
     @Test
     public void facing() {
-        assertEquals(Direction.N, v.getFacing());
+        assertEquals(Direction.N, v.getDirection());
     }
 
     @Test
     public void modelName() {
-        assertEquals("v240", v.getModelName());
+        assertEquals("Volvo240", v.getModelName());
     }
 
     @Test
     public void position() {
-        assertEquals(new Position(0, 0), v.getPosition());
+        assertEquals(new Point2D.Double(0, 0), v.getPosition());
     }
 
     @Test
@@ -53,53 +55,53 @@ public class Volvo240Test {
     @Test
     public void turnLeft() {
         v.turnLeft();
-        assertEquals(Direction.NW, v.getFacing());
+        assertEquals(Direction.NW, v.getDirection());
     }
 
     @Test
     public void soMuchLeft() {
         v.turnLeft();
-        assertEquals(Direction.NW, v.getFacing());
+        assertEquals(Direction.NW, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.W, v.getFacing());
+        assertEquals(Direction.W, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.SW, v.getFacing());
+        assertEquals(Direction.SW, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.S, v.getFacing());
+        assertEquals(Direction.S, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.SE, v.getFacing());
+        assertEquals(Direction.SE, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.E, v.getFacing());
+        assertEquals(Direction.E, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.NE, v.getFacing());
+        assertEquals(Direction.NE, v.getDirection());
         v.turnLeft();
-        assertEquals(Direction.N, v.getFacing());
+        assertEquals(Direction.N, v.getDirection());
     }
 
     @Test
     public void turnRight() {
         v.turnRight();
-        assertEquals(Direction.NE, v.getFacing());
+        assertEquals(Direction.NE, v.getDirection());
     }
 
     @Test
     public void soMuchRight() {
         v.turnRight();
-        assertEquals(Direction.NE, v.getFacing());
+        assertEquals(Direction.NE, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.E, v.getFacing());
+        assertEquals(Direction.E, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.SE, v.getFacing());
+        assertEquals(Direction.SE, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.S, v.getFacing());
+        assertEquals(Direction.S, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.SW, v.getFacing());
+        assertEquals(Direction.SW, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.W, v.getFacing());
+        assertEquals(Direction.W, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.NW, v.getFacing());
+        assertEquals(Direction.NW, v.getDirection());
         v.turnRight();
-        assertEquals(Direction.N, v.getFacing());
+        assertEquals(Direction.N, v.getDirection());
     }
 
     @Test
@@ -129,28 +131,28 @@ public class Volvo240Test {
         assertEquals(0, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
-        assertEquals(0.15, v.getPosition().getY(), 0.01);
-        assertEquals(0.05, v.getPosition().getX(), 0.01);
+        assertEquals(0.17, v.getPosition().getY(), 0.01);
+        assertEquals(0.07, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
-        assertEquals(0.15, v.getPosition().getY(), 0.01);
-        assertEquals(0.15, v.getPosition().getX(), 0.01);
+        assertEquals(0.17, v.getPosition().getY(), 0.01);
+        assertEquals(0.17, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
         assertEquals(0.1, v.getPosition().getY(), 0.01);
-        assertEquals(0.2, v.getPosition().getX(), 0.01);
+        assertEquals(0.24, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
         assertEquals(0, v.getPosition().getY(), 0.01);
-        assertEquals(0.2, v.getPosition().getX(), 0.01);
+        assertEquals(0.24, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
-        assertEquals(-0.05, v.getPosition().getY(), 0.01);
-        assertEquals(0.15, v.getPosition().getX(), 0.01);
+        assertEquals(-0.07, v.getPosition().getY(), 0.01);
+        assertEquals(0.17, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
-        assertEquals(-0.05, v.getPosition().getY(), 0.01);
-        assertEquals(0.05, v.getPosition().getX(), 0.01);
+        assertEquals(-0.07, v.getPosition().getY(), 0.01);
+        assertEquals(0.07, v.getPosition().getX(), 0.01);
         v.turnRight();
         v.move();
         assertEquals(0, v.getPosition().getY(), 0.01);
@@ -211,4 +213,10 @@ public class Volvo240Test {
         v.brake(1);
         assertEquals(0, v.getCurrentSpeed(), 0);
     }
+
+
+
+
+
+
 }
