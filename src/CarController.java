@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /*
@@ -16,12 +15,12 @@ import java.util.ArrayList;
 public class CarController {
     // member fields:
 
-    private final int RANGE = 5;
+    private final static int RANGE = 5;
     // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
+    private final int DELAY = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    private Timer timer = new Timer(DELAY, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;

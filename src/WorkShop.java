@@ -1,7 +1,6 @@
 package src;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 public class WorkShop<T extends Car> {
 
     private Point pos;
-    private final int maxCapacity;
+    private final int MAX_CAPACITY;
     private Set<T> cars;
 
     /** Variables */
@@ -17,13 +16,13 @@ public class WorkShop<T extends Car> {
      *@param capacity The maximum amount of cars this WorkShop can hold.*/
     public WorkShop(int capacity) {
         this.cars = new HashSet<>();
-        this.maxCapacity = capacity;
+        this.MAX_CAPACITY = capacity;
         pos = new Point();
     }
 
     public WorkShop(int capacity, Point pos) {
         this.cars = new HashSet<>();
-        this.maxCapacity = capacity;
+        this.MAX_CAPACITY = capacity;
         this.pos = pos;
     }
 
@@ -31,7 +30,7 @@ public class WorkShop<T extends Car> {
      *@param car The Car to be added to the WorkShop.
      *@return   true    if successful, false otherwise.*/
     public boolean addCar(T car){
-       if (cars.size() < maxCapacity) {
+       if (cars.size() < MAX_CAPACITY) {
            cars.add(car);
            return true;
        }
@@ -59,7 +58,7 @@ public class WorkShop<T extends Car> {
 
     /**The maximum amount of cars this WorkShop can hold.*/
     public int getMaxCapacity(){
-        return maxCapacity;
+        return MAX_CAPACITY;
     }
 
     public Point getPosition() {

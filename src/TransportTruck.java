@@ -1,28 +1,27 @@
 package src;
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.Stack;
 
 public class TransportTruck extends TransportVehicles{
     // Assumption: TransportVehicles are too large to go on the car transporter
-    Stack<PrivateCars> carTransport = new Stack<>();
-    private final int capacity;
+    private Stack<PrivateCars> carTransport = new Stack<>();
+    private final int CAPACITY;
     private final static int LOAD_RANGE = 10;
 
 
     public TransportTruck() {
         super(2, Color.gray, 100, "Truck");
-        capacity = 10;
+        CAPACITY = 10;
     }
 
     public TransportTruck(int nrDoors, Color color, double enginePower, String modelName) {
         super(nrDoors, color, enginePower, modelName);
-        capacity = 10;
+        CAPACITY = 10;
     }
 
     public TransportTruck(int nrDoors, Color color, double enginePower, String modelName, Point pos) {
         super(nrDoors, color, enginePower, modelName, pos);
-        capacity = 10;
+        CAPACITY = 10;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class TransportTruck extends TransportVehicles{
      *@param pCar The PrivateCars to be loaded onto the TransportTruck.
      *@return   true    if successful, otherwise false.*/
     public boolean load(PrivateCars pCar) {
-        if(isLoadable() && inRange(pCar) && carTransport.size() < capacity) {
+        if(isLoadable() && inRange(pCar) && carTransport.size() < CAPACITY) {
             pCar.position = position;
             carTransport.push(pCar);
             pCar.stopEngine();
@@ -79,9 +78,9 @@ public class TransportTruck extends TransportVehicles{
         } else return null;
     }
 
-    /**Unloads cars in reverse order of loading (LIFO).
+    /* /**Unloads cars in reverse order of loading (LIFO).
      *@param count The number of PrivateCars to be unloaded.
-     *@return   true    if successful, false otherwise.*/
+     *@return   true    if successful, false otherwise.
     protected boolean deLoad(int count) {
         int x = 0;
         if (count < carTransport.size() && isLoadable()) {
@@ -92,7 +91,7 @@ public class TransportTruck extends TransportVehicles{
             }
         }
         return x == count;
-    }
+    }*/
 
     /**@return  How many PrivateCars are currently on the TransportTruck.*/
     public int getLoad() {
@@ -101,6 +100,6 @@ public class TransportTruck extends TransportVehicles{
 
     /**@return  How many PrivateCars this TransportTruck can hold.*/
     public int getCapacity() {
-        return capacity;
+        return CAPACITY;
     }
 }

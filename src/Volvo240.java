@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 public class Volvo240 extends PrivateCars {
 
-    private final static double trimFactor = 1.25;
+    private final static double TRIM_FACTOR = 1.25;
 
     public Volvo240(){
         super(4, Color.black, 100, "Volvo240");
@@ -20,6 +20,6 @@ public class Volvo240 extends PrivateCars {
 
     @Override
     protected double speedFactor(){
-        return enginePower * 0.01 * trimFactor;
+        return enginePower * 0.01 * TRIM_FACTOR;
     }
 }

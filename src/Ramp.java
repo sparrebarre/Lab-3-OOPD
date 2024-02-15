@@ -4,7 +4,7 @@ public class Ramp {
     private boolean ramp;
     private int rampDegree;
 
-    private static final int maxDegree = 70;
+    private static final int MAX_DEGREE = 70;
 
     public void lowerRamp(){
         ramp = true;
@@ -27,8 +27,8 @@ public class Ramp {
     }
 
     public boolean incDegree(){
-        if(rampDegree >= maxDegree) return false;
-        else rampDegree = Math.min(rampDegree += 10, maxDegree);
+        if(rampDegree >= MAX_DEGREE) return false;
+        else rampDegree = Math.min(rampDegree += 10, MAX_DEGREE);
         // if implementing a load method in scania that depends on ramp being fully down:
         // need to redefine when ramp is considered down
         if (rampDegree > 0) ramp = true;
