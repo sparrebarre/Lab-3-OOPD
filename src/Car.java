@@ -34,7 +34,7 @@ public abstract class Car implements Movable {
         this.color = color;
         this.enginePower = enginePower;
         this.modelName = modelName;
-        facing = Direction.N;
+        facing = Direction.E;
         position = pos;
         stopEngine();
         serial = counter++;
