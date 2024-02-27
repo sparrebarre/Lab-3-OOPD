@@ -107,13 +107,13 @@ import static org.junit.Assert.*;
 
         @Test
         public void speed() {
-            assertEquals(0, v.getCurrentSpeed(), 0.01);
+            assertEquals(0, v.getSpeed(), 0.01);
         }
 
         @Test
         public void startEngine() {
             v.startEngine();
-            assertEquals(0.1, v.getCurrentSpeed(), 0.01);
+            assertEquals(0.1, v.getSpeed(), 0.01);
         }
 
         @Test
@@ -167,7 +167,7 @@ import static org.junit.Assert.*;
         @Test
         public void gas() {
             v.gas(1);
-            assertEquals(1.0, v.getCurrentSpeed(), 0.01);
+            assertEquals(1.0, v.getSpeed(), 0.01);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -182,21 +182,21 @@ import static org.junit.Assert.*;
 
         @Test
         public void soMuchGas() {
-            while (v.getCurrentSpeed() < v.getEnginePower()) {
+            while (v.getSpeed() < v.getEnginePower()) {
                 v.gas(1);
             }
             v.gas(1);
-            assertEquals(100, v.getCurrentSpeed(), 0);
+            assertEquals(100, v.getSpeed(), 0);
             assertEquals(100, v.getEnginePower(), 0);
-            assertEquals(v.getEnginePower(),v.getCurrentSpeed(), 0);
+            assertEquals(v.getEnginePower(),v.getSpeed(), 0);
         }
 
         @Test
         public void brake() {
             v.gas(1);
-            assertEquals(1.0, v.getCurrentSpeed(), 0.01);
+            assertEquals(1.0, v.getSpeed(), 0.01);
             v.brake(1);
-            assertEquals(0, v.getCurrentSpeed(), 0.01);
+            assertEquals(0, v.getSpeed(), 0.01);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -212,7 +212,7 @@ import static org.junit.Assert.*;
         @Test
         public void soMuchBrake() {
             v.brake(1);
-            assertEquals(0, v.getCurrentSpeed(), 0);
+            assertEquals(0, v.getSpeed(), 0);
         }
 
         /**
@@ -235,7 +235,7 @@ import static org.junit.Assert.*;
         public void checkStartEngine() {
             v.lowerRamp();
             v.startEngine();
-            assertEquals(0, v.getCurrentSpeed(), 0.01);
+            assertEquals(0, v.getSpeed(), 0.01);
             assertTrue(v.isLoadable());
         }
 
@@ -243,7 +243,7 @@ import static org.junit.Assert.*;
         public void checkGasWhileDown() {
             v.lowerRamp();
             v.gas(1);
-            assertEquals(0, v.getCurrentSpeed(), 0.01);
+            assertEquals(0, v.getSpeed(), 0.01);
             assertTrue(v.isLoadable());
         }
 
