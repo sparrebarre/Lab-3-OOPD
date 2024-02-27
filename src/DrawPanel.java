@@ -14,9 +14,8 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel{
 
-    final static int DISTANCE = 100;
     private ArrayList<Car> cars = new ArrayList<>();
-    private ArrayList<WorkShop<Car>> shops = new ArrayList<>();
+    private ArrayList<WorkShop<?>> shops = new ArrayList<>();
 
     // Initializes the panel
     public DrawPanel(int x, int y) {
@@ -29,7 +28,7 @@ public class DrawPanel extends JPanel{
 
     public boolean addCar(Car car) { return cars.add(car); }
 
-    public <T extends Car> boolean addShop(WorkShop<T> shop) { return shops.add((WorkShop<Car>) shop); }
+    public <T extends Car> boolean addShop(WorkShop<T> shop) { return shops.add(shop); }
 
     // This method is called each time the panel updates/refreshes/repaints itself
     @Override
@@ -41,7 +40,7 @@ public class DrawPanel extends JPanel{
                 Point pos = car.getPosition();
                 g.drawImage(ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream(car.getImagePath()))), (int) pos.getX(), (int) pos.getY(), null); // see javadoc for more info on the parameters
             }
-            for (WorkShop<Car> shop : shops ) {
+            for (WorkShop<?> shop : shops ) {
                 Point pos = shop.getPosition();
                 g.drawImage(ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream(shop.getImagePath()))), (int) pos.getX(), (int) pos.getY(), null);
             }

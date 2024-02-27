@@ -18,13 +18,6 @@ public class Main {
     private static CarController cc;
 
 
-    public static void main(String[] args) {
-
-        init();
-        // Start the timer
-        timer.start();
-    }
-
     private static void init() {
         cc = new CarController();
 
@@ -51,6 +44,13 @@ public class Main {
 
         cc.setShop(shop);
         frame.addShop(shop);
+    }
+
+    public static void main(String[] args) {
+
+        init();
+        // Start the timer
+        timer.start();
     }
 
     private static boolean outOfBounds(Car car) {
