@@ -16,12 +16,14 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     // A list of cars, modify if needed
     private final static ArrayList<Car> cars = new ArrayList<>();
-    private final static WorkShop<Volvo240> shop = new WorkShop<>(2, new Point(300, 300));
+    private static WorkShop<Volvo240> shop;
 
     //methods:
     public boolean addCar(Car car) {
         return cars.add(car);
     }
+
+    public void setShop(WorkShop<Volvo240> wShop) { shop = wShop; }
 
     public void update() {
         ArrayList<Car> removables = new ArrayList<>();

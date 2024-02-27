@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -12,22 +13,44 @@ public class Main {
     // each step between delays.
     private static final int DELAY = 50;
     private static Timer timer = new Timer(DELAY, new TimerListener());
+    private static ArrayList<Car> cars = new ArrayList<>();
     private static CarView frame;
     private static CarController cc;
 
 
     public static void main(String[] args) {
+
+        init();
+        // Start the timer
+        timer.start();
+    }
+
+    private static void init() {
         cc = new CarController();
 
-        cc.addCar(new Volvo240(4, Color.black, 100, "Volvo240", new Point(0, 300)));
-        cc.addCar(new Saab95(2, Color.red, 125, "Saab95", new Point(0, 200)));
-        cc.addCar(new Scania(2, Color.blue, 100, "Scania", new Point(0, 100)));
+        Car car1 = new Volvo240(4, Color.black, 100, "Volvo240", new Point(0, 300));
+        car1.setImagePath("pics/Volvo240.jpg");
+        Car car2 = new Saab95(2, Color.red, 125, "Saab95", new Point(0, 200));
+        car2.setImagePath("pics/Saab95.jpg");
+        Car car3 = new Scania(2, Color.blue, 100, "Scania", new Point(0, 100));
+        car3.setImagePath("pics/Scania.jpg");
+
+        WorkShop<Volvo240> shop = new WorkShop<>(2, new Point(300, 300));
+        shop.setImagePath("pics/VolvoBrand.jpg");
+
+        cars.add(car1);
+        cars.add(car2);
+        cars.add(car3);
 
         // Start a new view and send a reference of self
         frame = new CarView("CarSim 1.0", cc);
+        for (Car car : cars) {
+            cc.addCar(car);
+            frame.addCar(car);
+        }
 
-        // Start the timer
-        timer.start();
+        cc.setShop(shop);
+        frame.addShop(shop);
     }
 
     private static boolean outOfBounds(Car car) {
@@ -52,13 +75,11 @@ public class Main {
 
         public void actionPerformed(ActionEvent e) {
                 cc.update();
-                for (Car car : cc.getCars()) {
+                for (Car car : cars) {
                     if (outOfBounds(car)) cc.rebound(car, new Point(reboundX(car), reboundY(car)));
                 }
-
-                //frame.drawPanel.moveit((int) oldPos.getX(), (int) oldPos.getY(), x, y);
-                // repaint() calls the paintComponent method of the panel
-                //frame.drawPanel.repaint();
+                // frame.drawPanel.repaint();
+                frame.update();
             }
         }
 }

@@ -15,6 +15,7 @@ public abstract class Car implements Movable {
     protected double enginePower;
     private final int serial;
     private static int counter = 0;
+    private String image;
 
     /** Constructor */
     public Car(int nrDoors, Color color, double enginePower, String modelName) {
@@ -40,7 +41,11 @@ public abstract class Car implements Movable {
     }
 
     /** Methods */
+    public void setImagePath(String path) {
+        this.image = path;
+    }
 
+    public String getImagePath() { return image; }
 
     /**@return      the car's model name*/
     public String getModelName() {
