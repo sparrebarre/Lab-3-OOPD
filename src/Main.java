@@ -37,7 +37,7 @@ public class Main {
         cars.add(car3);
 
         // Start a new view and send a reference of self
-        frame = new CarView("CarSim 1.0", cc);
+        frame = new CarView("CarSim 1.0");
         for (Car car : cars) {
             cc.addCar(car);
             frame.addCar(car);
