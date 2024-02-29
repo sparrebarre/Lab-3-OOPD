@@ -97,4 +97,6 @@ public class CarController {
     public void stopEngine() {
         for (Car car : cars) car.stopEngine();
     }
+    public int getCars() { return cars.size(); }
+    public void removeCar() { cars.remove(cars.size() - 1); }
 }

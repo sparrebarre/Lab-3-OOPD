@@ -37,7 +37,8 @@ public class CarView extends JFrame{
     private JButton turboOffButton = new JButton("Saab Turbo off");
     private JButton liftBedButton = new JButton("Scania Lift Bed");
     private JButton lowerBedButton = new JButton("Scania Lower Bed");
-
+    private JButton addCarButton = new JButton("Add car");
+    private JButton removeCarButton = new JButton("Remove car");
     private JButton startButton = new JButton("Start all cars");
     private JButton stopButton = new JButton("Stop all cars");
 
@@ -52,6 +53,7 @@ public class CarView extends JFrame{
     }
 
     public boolean addCar(Car car) { return drawPanel.addCar(car); }
+    public void removeCar() {drawPanel.removeCar();}
 
     public <T extends Car> boolean addShop(WorkShop<T> shop) { return drawPanel.addShop(shop); }
 
@@ -92,6 +94,8 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -108,6 +112,24 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(carC.getCars() >= 5){
+                }else {
+                    Car car = CarGenerator.randomCarGen();
+                    Point p = new Point(0, (carC.getCars() * 100) + 100); // creates the position of the added cars att 100 pixels apart as our others
+                    car.setPosition(p);
+                    carC.addCar(car);
+                    addCar(car);
+                }}
+        });
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(carC.getCars() < 1){} else carC.removeCar(); removeCar();
+            }
+        });
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

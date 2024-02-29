@@ -27,6 +27,7 @@ public class DrawPanel extends JPanel{
     public void update() { repaint(); }
 
     public boolean addCar(Car car) { return cars.add(car); }
+    public void removeCar() {cars.remove(cars.size() - 1);}
 
     public <T extends Car> boolean addShop(WorkShop<T> shop) { return shops.add(shop); }
 
