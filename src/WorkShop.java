@@ -10,6 +10,7 @@ public class WorkShop<T extends Car> {
     private Point pos;
     private final int MAX_CAPACITY;
     private Set<T> cars;
+    private String image;
 
     /** Variables */
     /**Constructor
@@ -24,6 +25,14 @@ public class WorkShop<T extends Car> {
         this.cars = new HashSet<>();
         this.MAX_CAPACITY = capacity;
         this.pos = pos;
+    }
+
+    public void setImagePath(String path) {
+        this.image = path;
+    }
+
+    public String getImagePath() {
+        return image;
     }
 
     /**Adds a Car to the WorkShop.

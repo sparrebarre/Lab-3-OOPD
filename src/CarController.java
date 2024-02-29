@@ -1,9 +1,6 @@
 package src;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /*
@@ -14,130 +11,90 @@ import java.util.ArrayList;
 
 public class CarController {
     // member fields:
-
     private final static int RANGE = 5;
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int DELAY = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(DELAY, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
-    WorkShop<Volvo240> shop = new WorkShop<>(2, new Point(300, 300));
+    private static ArrayList<Car> cars = new ArrayList<>();
+    private static WorkShop<Volvo240> shop;
 
     //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(new Volvo240(4, Color.black, 100, "Volvo240", new Point(0, 300)));
-        cc.cars.add(new Saab95(2, Color.red, 125, "Saab95", new Point(0, 200)));
-        cc.cars.add(new Scania(2, Color.blue, 100, "Scania", new Point(0, 100)));
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
+    public boolean addCar(Car car) {
+        return cars.add(car);
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
+    public void setShop(WorkShop<Volvo240> wShop) { shop = wShop; }
 
-        public void actionPerformed(ActionEvent e) {
-            ArrayList<Car> removables = new ArrayList<>();
-            for (Car car : cars) {
-                Point oldPos = car.getPosition();
-                car.move();
-                Point pos = car.getPosition();
-                int x = (int) pos.getX();
-                int y = (int) pos.getY();
-                if (inRange(car.getPosition(), shop.getPosition()) && car instanceof Volvo240) {
-                    shop.addCar((Volvo240) car);
-                    removables.add(car);
-                }
-                if (x < 0 || x > frame.getX()/2 + frame.getWidth()/2 || y < 0 || y > frame.getHeight() - 300) {
-                    car.stopEngine();
-                    car.turnAround();
-                    rebound(car);
-                    car.startEngine();
-                    x = (int) car.getPosition().getX();
-                    y = (int) car.getPosition().getY();
-                }
-                frame.drawPanel.moveit((int) oldPos.getX(), (int) oldPos.getY(), x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+    public void update() {
+        ArrayList<Car> removables = new ArrayList<>();
+        for (Car car : cars) {
+            car.move();
+            Point pos = car.getPosition();
+            if (inRange(pos, shop.getPosition()) && car instanceof Volvo240) {
+                shop.addCar((Volvo240) car);
+                removables.add(car);
             }
-            // removing outside for-each loop because inside would cause an exception
-            for (Car removable : removables) cars.remove(removable);
         }
+        for (Car car : removables) cars.remove(car);
     }
 
-    void rebound(Car car) {
-        Point pos = car.getPosition();
-        int x = (int) pos.getX();
-        int y = (int) pos.getY();
-        if (x < 0) car.setPosition(new Point(1, y));
-        else if (x > frame.getX()/2 + frame.getWidth()/2) car.setPosition(new Point(frame.getX()/2 + frame.getWidth()/2, y));
-        if (y < 0) car.setPosition(new Point(x, 1));
-        else if (y > frame.getHeight() - 300) car.setPosition(new Point(x, frame.getHeight() - 300));
+    public void rebound(Car car, Point newPos) {
+        double speed = car.getSpeed();
+        car.stopEngine();
+        car.turnAround();
+        car.setPosition(newPos);
+        car.setSpeed(speed);
     }
 
-    boolean inRange(Point carPos, Point shopPos) {
+    private boolean inRange(Point carPos, Point shopPos) {
         return (carPos.getX() - shopPos.getX() >= -RANGE && carPos.getX() - shopPos.getX() <= RANGE) &&
                 (carPos.getY() - shopPos.getY() >= -RANGE && carPos.getY() - shopPos.getY() <= RANGE);
     }
 
     // Calls the gas method for each car once
-    void gas(int amount) {
+    public void gas(int amount) {
         double gas = ((double) amount) / 100;
             for (Car car : cars) {
             car.gas(gas);
         }
     }
 
-    void brake(int amount) {
+    public void brake(int amount) {
         double brake = ((double) amount / 100);
         for (Car car : cars) {
             car.brake(brake);
         }
     }
 
-    void turboOn() {
+    public void turboOn() {
         for (Car car : cars) {
             if (car instanceof Saab95) ((Saab95) car).setTurboOn();
         }
     }
 
-    void turboOff() {
+    public void turboOff() {
         for (Car car : cars) {
             if (car instanceof Saab95) ((Saab95)car).setTurboOff();
         }
     }
 
-    void lowerRamp() {
+    public void lowerRamp() {
         for (Car car : cars) {
             if (car instanceof TransportVehicles) ((TransportVehicles) car).lowerRamp();
         }
     }
 
-    void liftRamp() {
+    public void liftRamp() {
         for (Car car : cars) {
             if (car instanceof TransportVehicles) ((TransportVehicles) car).liftRamp();
         }
     }
 
-    void startEngine() {
+    public void startEngine() {
         for (Car car : cars) car.startEngine();
     }
 
-    void stopEngine() {
+    public void stopEngine() {
         for (Car car : cars) car.stopEngine();
     }
 }

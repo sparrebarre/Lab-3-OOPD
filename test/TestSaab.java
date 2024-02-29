@@ -107,13 +107,13 @@ public class TestSaab {
 
     @Test
     public void speed() {
-        assertEquals(0, s.getCurrentSpeed(), 0.01);
+        assertEquals(0, s.getSpeed(), 0.01);
     }
 
     @Test
     public void startEngine() {
         s.startEngine();
-        assertEquals(0.1, s.getCurrentSpeed(), 0.01);
+        assertEquals(0.1, s.getSpeed(), 0.01);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class TestSaab {
     @Test
     public void gas() {
         s.gas(1);
-        assertEquals(1.25, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.25, s.getSpeed(), 0.01);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -223,21 +223,21 @@ public class TestSaab {
 
     @Test
     public void soMuchGas() {
-        while (s.getCurrentSpeed() < s.getEnginePower()) {
+        while (s.getSpeed() < s.getEnginePower()) {
             s.gas(1);
         }
         s.gas(1);
-        assertEquals(125, s.getCurrentSpeed(), 0);
+        assertEquals(125, s.getSpeed(), 0);
         assertEquals(125, s.getEnginePower(), 0);
-        assertEquals(s.getEnginePower(), s.getCurrentSpeed(), 0);
+        assertEquals(s.getEnginePower(), s.getSpeed(), 0);
     }
 
     @Test
     public void brake() {
         s.gas(1);
-        assertEquals(1.25, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.25, s.getSpeed(), 0.01);
         s.brake(1);
-        assertEquals(0, s.getCurrentSpeed(), 0.01);
+        assertEquals(0, s.getSpeed(), 0.01);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -253,14 +253,14 @@ public class TestSaab {
     @Test
     public void soMuchBrake() {
         s.brake(1);
-        assertEquals(0, s.getCurrentSpeed(), 0);
+        assertEquals(0, s.getSpeed(), 0);
     }
 
     @Test
     public void turboGas() {
         s.setTurboOn();
         s.gas(1);
-        assertEquals(1.625, s.getCurrentSpeed(), 0.01);
+        assertEquals(1.625, s.getSpeed(), 0.01);
     }
 
 

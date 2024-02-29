@@ -1,7 +1,6 @@
 package src;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 public abstract class Car implements Movable {
 
@@ -16,6 +15,7 @@ public abstract class Car implements Movable {
     protected double enginePower;
     private final int serial;
     private static int counter = 0;
+    private String image;
 
     /** Constructor */
     public Car(int nrDoors, Color color, double enginePower, String modelName) {
@@ -41,7 +41,11 @@ public abstract class Car implements Movable {
     }
 
     /** Methods */
+    public void setImagePath(String path) {
+        this.image = path;
+    }
 
+    public String getImagePath() { return image; }
 
     /**@return      the car's model name*/
     public String getModelName() {
@@ -74,9 +78,11 @@ public abstract class Car implements Movable {
     }
 
     /**@return      the car's current speed*/
-    public double getCurrentSpeed(){
+    public double getSpeed(){
         return currentSpeed;
     }
+
+    public void setSpeed(double speed) { this.currentSpeed = speed; }
 
     /**@return      the car's color*/
     public Color getColor(){
@@ -152,13 +158,13 @@ public abstract class Car implements Movable {
     /**Increase the car's speed.
      *@param amount A percentage between 0 and 1.*/
     protected void incrementSpeed(double amount) {
-        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+        currentSpeed = Math.min(getSpeed() + speedFactor() * amount,enginePower);
     }
 
     /**Decrease the car's speed.
      *@param amount A percentage between 0 and 1.*/
     protected void decrementSpeed(double amount) {
-        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+        currentSpeed = Math.max(getSpeed() - speedFactor() * amount,0);
     }
 
     /**Apply an increase in speed to the car based on passed in percentage.
