@@ -40,7 +40,30 @@ public class CarController implements Observer {
 
     public void notify(String[] event) {
         switch (event[0]) {
-            case "gas": gas(Integer.parseInt(event[1]));
+            case "gas":
+                gas(Integer.parseInt(event[1]));
+                break;
+            case "brake":
+                brake(Integer.parseInt(event[1]));
+                break;
+            case "turboOn":
+                turboOn();
+                break;
+            case "turboOff":
+                turboOff();
+                break;
+            case "lowerRamp":
+                lowerRamp();
+                break;
+            case "liftRamp":
+                liftRamp();
+                break;
+            case "startEngine":
+                startEngine();
+                break;
+            case "stopEngine":
+                stopEngine();
+                break;
         }
     }
 
@@ -103,6 +126,6 @@ public class CarController implements Observer {
     public void stopEngine() {
         for (Car car : cars) car.stopEngine();
     }
-    public int getCars() { return cars.size(); }
-    public void removeCar() { cars.remove(cars.size() - 1); }
+
+    public void removeCar(Car car) { cars.remove(car); }
 }
