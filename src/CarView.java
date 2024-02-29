@@ -15,12 +15,11 @@ import java.util.ArrayList;
  * each of it's components.
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame {
     private static final int X = 800;
     private static final int Y = 800;
 
-    // The controller member
-    private CarController carC;
+    private Observable obs;
 
     private DrawPanel drawPanel = new DrawPanel(X, Y - 240);
 
@@ -37,21 +36,27 @@ public class CarView extends JFrame{
     private JButton turboOffButton = new JButton("Saab Turbo off");
     private JButton liftBedButton = new JButton("Scania Lift Bed");
     private JButton lowerBedButton = new JButton("Scania Lower Bed");
-
+    private JButton addCarButton = new JButton("Add car");
+    private JButton removeCarButton = new JButton("Remove car");
     private JButton startButton = new JButton("Start all cars");
     private JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
     public CarView(String framename, CarController cc){
-        this.carC = cc;
         initComponents(framename);
+        this.obs = new Observable();
     }
 
     public void update() {
         drawPanel.update();
     }
 
+    public void subscribe(Observer o) { obs.addObserver(o); }
+
+    public void unsubscribe(Observer o) { obs.removeObserver(o); }
+
     public boolean addCar(Car car) { return drawPanel.addCar(car); }
+    public void removeCar(Car car) { drawPanel.removeCar(car); }
 
     public <T extends Car> boolean addShop(WorkShop<T> shop) { return drawPanel.addShop(shop); }
 
@@ -92,6 +97,8 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -108,39 +115,45 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"addCar"}); }
+        });
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"removeCar"}); }
+        });
         gasButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
-            }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"gas", String.valueOf(gasAmount)}); }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.brake(gasAmount);}
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"brake", String.valueOf(gasAmount)}); }
         });
         turboOnButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.turboOn(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"turboOn"}); }
         });
         turboOffButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.turboOff(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"turboOff"}); }
         });
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.lowerRamp(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"lowerRamp"}); }
         });
         liftBedButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.liftRamp(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"liftRamp"}); }
         });
         startButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.startEngine(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"startEngine"}); }
         });
         stopButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.stopEngine(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"stopEngine"}); }
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.

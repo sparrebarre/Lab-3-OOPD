@@ -12,6 +12,7 @@ public class Main {
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private static final int DELAY = 50;
+    private static final int MAX_CARS = 5;
     private static Timer timer = new Timer(DELAY, new TimerListener());
     private static ArrayList<Car> cars = new ArrayList<>();
     private static CarView frame;
@@ -44,6 +45,9 @@ public class Main {
 
         cc.setShop(shop);
         frame.addShop(shop);
+
+        frame.subscribe(cc);
+        frame.subscribe(new MainObserver());
     }
 
     public static void main(String[] args) {
@@ -82,4 +86,32 @@ public class Main {
                 frame.update();
             }
         }
+
+    private static class MainObserver implements Observer {
+
+        @Override
+        public void notify(String[] event){
+            switch (event[0]){
+                case "addCar":
+                    if(cars.size() < MAX_CARS){
+                        Car car = CarGenerator.randomCarGen();
+                        Point p = new Point(0, (cars.size() * 100) + 100);
+                        assert car != null;
+                        car.setPosition(p);
+                        cars.add(car);
+                        cc.addCar(car);
+                        frame.addCar(car);
+                    }
+                    break;
+                case "removeCar":
+                    if (!cars.isEmpty()) {
+                        Car removable = cars.get(cars.size() - 1);
+                        cc.removeCar(removable);
+                        frame.removeCar(removable);
+                        cars.remove(removable);
+                    }
+                    break;
+            }
+        }
+    }
 }
