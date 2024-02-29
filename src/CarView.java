@@ -15,12 +15,13 @@ import java.util.ArrayList;
  * each of it's components.
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame {
     private static final int X = 800;
     private static final int Y = 800;
 
     // The controller member
     private CarController carC;
+    private Observable obs;
 
     private DrawPanel drawPanel = new DrawPanel(X, Y - 240);
 
@@ -46,11 +47,16 @@ public class CarView extends JFrame{
     public CarView(String framename, CarController cc){
         this.carC = cc;
         initComponents(framename);
+        this.obs = new Observable();
     }
 
     public void update() {
         drawPanel.update();
     }
+
+    public void subscribe(Observer o) { obs.addObserver(o); }
+
+    public void unsubscribe(Observer o) { obs.removeObserver(o); }
 
     public boolean addCar(Car car) { return drawPanel.addCar(car); }
     public void removeCar() {drawPanel.removeCar();}
@@ -142,7 +148,7 @@ public class CarView extends JFrame{
         });
         turboOnButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.turboOn(); }
+            public void actionPerformed(ActionEvent e) { obs.notifyObservers(new String[]{"turboOn"}); }
         });
         turboOffButton.addActionListener(new ActionListener() {
             @Override

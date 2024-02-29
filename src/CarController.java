@@ -9,7 +9,7 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class CarController implements Observer {
     // member fields:
     private final static int RANGE = 5;
 
@@ -36,6 +36,12 @@ public class CarController {
             }
         }
         for (Car car : removables) cars.remove(car);
+    }
+
+    public void notify(String[] event) {
+        switch (event[0]) {
+            case "gas": gas(Integer.parseInt(event[1]));
+        }
     }
 
     public void rebound(Car car, Point newPos) {
